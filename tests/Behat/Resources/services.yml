@@ -3,6 +3,7 @@ imports:
     - { resource: "services/pages.yml" }
 
 services:
+    _defaults: { public: true }
     bitbag_sylius_quadpay_plugin.behat.quadpay_api_mocker:
         class: Tests\BitBag\SyliusQuadPayPlugin\Behat\Mocker\QuadPayApiMocker
         arguments:

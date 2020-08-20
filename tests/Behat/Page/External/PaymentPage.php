@@ -15,7 +15,7 @@ namespace Tests\BitBag\SyliusQuadPayPlugin\Behat\Page\External;
 use Behat\Mink\Session;
 use BitBag\SyliusQuadPayPlugin\Client\QuadPayApiClientInterface;
 use Payum\Core\Security\TokenInterface;
-use Sylius\Behat\Page\Page;
+use FriendsOfBehat\PageObjectExtension\Page\Page;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
 use Symfony\Component\BrowserKit\Client;
 
@@ -29,7 +29,7 @@ final class PaymentPage extends Page implements PaymentPageInterface
 
     public function __construct(
         Session $session,
-        array $parameters,
+        $parameters,
         RepositoryInterface $securityTokenRepository,
         Client $client
     ) {
@@ -46,7 +46,7 @@ final class PaymentPage extends Page implements PaymentPageInterface
         $this->getDriver()->visit($captureToken->getTargetUrl() . '?&' . http_build_query(['status' => QuadPayApiClientInterface::STATUS_ABANDONED]));
     }
 
-    protected function getUrl(array $urlParameters = [])
+    protected function getUrl(array $urlParameters = []): string
     {
         return 'https://checkout.quadpay.com/checkout';
     }
