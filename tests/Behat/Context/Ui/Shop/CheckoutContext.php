@@ -141,7 +141,7 @@ final class CheckoutContext implements Context
      */
     public function iWasAtTheCheckoutSummaryStep(): void
     {
-        $this->addressingContext->iSpecifiedTheShippingAddress();
+//        $this->addressingContext->iSpecifiedTheShippingAddress();
         $this->iProceedOrderWithShippingMethodAndPayment('Free', 'Offline');
     }
 
@@ -180,7 +180,7 @@ final class CheckoutContext implements Context
      */
     public function iProceedThroughCheckoutProcess($localeCode = 'en_US'): void
     {
-        $this->addressingContext->iProceedSelectingShippingCountry(null, $localeCode);
+//        $this->addressingContext->iProceedSelectingShippingCountry(null, $localeCode);
         $this->shippingContext->iCompleteTheShippingStep();
         $this->paymentContext->iCompleteThePaymentStep();
     }
@@ -190,7 +190,7 @@ final class CheckoutContext implements Context
      */
     public function iProceedSelectingShippingCountryAndShippingMethod(CountryInterface $shippingCountry = null, $shippingMethodName = null): void
     {
-        $this->addressingContext->iProceedSelectingShippingCountry($shippingCountry);
+//        $this->addressingContext->iProceedSelectingShippingCountry($shippingCountry);
         $this->shippingContext->iHaveProceededSelectingShippingMethod($shippingMethodName ?: 'Free');
     }
 
