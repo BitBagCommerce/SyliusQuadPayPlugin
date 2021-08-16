@@ -39,6 +39,6 @@ services:
         class: BitBag\SyliusQuadPayPlugin\Twig\Extension\RenderWidgetExtension
         arguments:
             - "@bitbag_sylius_quadpay_plugin.rapository.payment_method"
-            - "@templating"
+            - "@twig"
         tags:
             - { name: twig.extension }

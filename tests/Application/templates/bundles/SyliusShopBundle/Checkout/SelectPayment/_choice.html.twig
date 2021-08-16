@@ -1,0 +1,29 @@
+{% set qudPayFactoryName = constant('BitBag\\SyliusQuadPayPlugin\\QuadPayGatewayFactory::FACTORY_NAME') %}
+
+{% set isQuadPayMethod = method.gatewayConfig.factoryName is defined and qudPayFactoryName == method.gatewayConfig.factoryName %}
+
+
+<div class="item" {{ sylius_test_html_attribute('payment-item') }} {{ isQuadPayMethod ? 'quadpay-method' : '' }}>
+    <div class="field">
+        <div class="ui radio checkbox" {{ sylius_test_html_attribute('payment-method-checkbox') }}>
+            {{ form_widget(form, sylius_test_form_attribute('payment-method-select')) }}
+        </div>
+    </div>
+    <div class="content">
+        {% if isQuadPayMethod %}
+        <a class="header">
+            <img src="{{ asset('bundles/bitbagsyliusquadpayplugin/img/quadpay_4interestfree_lc@2x.png') }}">
+        </a>
+        <div>
+            <p>{{ method.description }}</p>
+        </div>
+        {% else %}
+            <a class="header">{{ form_label(form, null, {'label_attr': {'data-test-payment-method-label': ''}}) }}</a>
+            {% if method.description is not null %}
+                <div class="description">
+                    <p>{{ method.description }}</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
