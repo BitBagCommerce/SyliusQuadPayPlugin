@@ -17,8 +17,6 @@ At BitBag we do believe in open source. However, we are able to do it just becau
 * [Overwiev](#overwiev)
 * [Support](#we-are-here-to-help)
 * [Installation](#installation)
-   * [Usage](#usage)
-   * [Customization](#customization)
    * [Testing](#testing)
 * [About us](#about-us)
    * [Community](#community)
@@ -68,7 +66,7 @@ imports:
 
 Add parameters to `config/routes.yaml` file:
 
-```
+```yaml
 # config/packages/_sylius.yaml
 
 parameters:
