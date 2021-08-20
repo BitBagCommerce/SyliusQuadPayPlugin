@@ -14,7 +14,7 @@ namespace Tests\BitBag\SyliusQuadPayPlugin\Behat\Context\Setup;
 
 use Behat\Behat\Context\Context;
 use BitBag\SyliusQuadPayPlugin\QuadPayGatewayFactory;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use SM\Factory\FactoryInterface as StateMachineFactoryInterface;
 use Sylius\Component\Core\Model\OrderInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
