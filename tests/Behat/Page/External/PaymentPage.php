@@ -14,29 +14,21 @@ namespace Tests\BitBag\SyliusQuadPayPlugin\Behat\Page\External;
 
 use Behat\Mink\Session;
 use BitBag\SyliusQuadPayPlugin\Client\QuadPayApiClientInterface;
+use FriendsOfBehat\PageObjectExtension\Page\Page;
 use Payum\Core\Security\TokenInterface;
-use Sylius\Behat\Page\Page;
 use Sylius\Component\Resource\Repository\RepositoryInterface;
-use Symfony\Component\BrowserKit\Client;
 
 final class PaymentPage extends Page implements PaymentPageInterface
 {
     /** @var RepositoryInterface */
     private $securityTokenRepository;
 
-    /** @var Client */
-    private $client;
-
     public function __construct(
-        Session $session,
-        array $parameters,
         RepositoryInterface $securityTokenRepository,
-        Client $client
+        Session $session
     ) {
-        parent::__construct($session, $parameters);
-
+        parent::__construct($session);
         $this->securityTokenRepository = $securityTokenRepository;
-        $this->client = $client;
     }
 
     public function capture(): void
@@ -46,18 +38,18 @@ final class PaymentPage extends Page implements PaymentPageInterface
         $this->getDriver()->visit($captureToken->getTargetUrl() . '?&' . http_build_query(['status' => QuadPayApiClientInterface::STATUS_ABANDONED]));
     }
 
-    protected function getUrl(array $urlParameters = [])
+    protected function getUrl(array $urlParameters = []): string
     {
         return 'https://checkout.quadpay.com/checkout';
     }
 
-    private function findToken(string $type = 'capture'): TokenInterface
+    private function findToken(): TokenInterface
     {
         $tokens = [];
 
         /** @var TokenInterface $token */
         foreach ($this->securityTokenRepository->findAll() as $token) {
-            if (strpos($token->getTargetUrl(), $type)) {
+            if (strpos($token->getTargetUrl(), 'capture')) {
                 $tokens[] = $token;
             }
         }

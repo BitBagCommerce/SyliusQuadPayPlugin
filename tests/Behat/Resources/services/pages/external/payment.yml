@@ -4,5 +4,5 @@ services:
         parent: "sylius.behat.page"
         public: "false"
         arguments:
-            - "@sylius.repository.payment_security_token"
-            - "@test.client"
+            $securityTokenRepository: "@sylius.repository.payment_security_token"
+            $session: "@behat.mink.default_session"
