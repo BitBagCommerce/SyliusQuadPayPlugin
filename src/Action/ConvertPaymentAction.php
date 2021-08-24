@@ -36,7 +36,7 @@ final class ConvertPaymentAction implements ActionInterface, GatewayAwareInterfa
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      *
      * @param Convert $request
      */

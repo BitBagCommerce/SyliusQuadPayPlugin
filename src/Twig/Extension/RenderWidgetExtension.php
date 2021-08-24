@@ -20,8 +20,8 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use Twig\TwigFunction;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 final class RenderWidgetExtension extends AbstractExtension
 {
@@ -53,13 +53,11 @@ final class RenderWidgetExtension extends AbstractExtension
      */
     public function renderQuadPayWidget(int $amount, ChannelInterface $channel, PaymentMethodInterface $paymentMethod = null): string
     {
-
         if (null === $paymentMethod) {
             $paymentMethod = $this->paymentMethodRepository->findOneByGatewayFactoryNameAndChannel(QuadPayGatewayFactory::FACTORY_NAME, $channel);
         }
 
         if (null === $paymentMethod) {
-
             return '';
         }
 

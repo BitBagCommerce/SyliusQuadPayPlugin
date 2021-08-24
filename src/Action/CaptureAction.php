@@ -30,7 +30,7 @@ final class CaptureAction implements ActionInterface, ApiAwareInterface, Gateway
     use ApiAwareTrait;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      *
      * @param Capture $request
      */
