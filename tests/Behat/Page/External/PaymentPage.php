@@ -20,6 +20,9 @@ use Sylius\Component\Resource\Repository\RepositoryInterface;
 
 final class PaymentPage extends Page implements PaymentPageInterface
 {
+
+    const TOKEN = 'capture';
+
     /** @var RepositoryInterface */
     private $securityTokenRepository;
 
@@ -49,7 +52,7 @@ final class PaymentPage extends Page implements PaymentPageInterface
 
         /** @var TokenInterface $token */
         foreach ($this->securityTokenRepository->findAll() as $token) {
-            if (strpos($token->getTargetUrl(), 'capture')) {
+            if (strpos($token->getTargetUrl(), $this::TOKEN)) {
                 $tokens[] = $token;
             }
         }
