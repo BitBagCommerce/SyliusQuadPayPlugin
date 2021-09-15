@@ -32,7 +32,9 @@
                 </td>
             </tr>
         {% endif %}
-        <tr {% if tax_included and not tax_excluded %}class="tax-disabled"{% endif %}>
+        <tr {%-if tax_included and not tax_excluded -%}
+                class="tax-disabled"
+            {% endif %}>
             <td>{{ 'sylius.ui.taxes_total'|trans }}:</td>
             <td class="right aligned">
                 {% if not tax_included and not tax_excluded %}
