@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusQuadPayPlugin\Behat\Context\Ui\Shop;
 
 use Behat\Behat\Context\Context;
+use FriendsOfBehat\PageObjectExtension\Page\UnexpectedPageException;
 use Sylius\Behat\Context\Ui\Shop\Checkout\CheckoutAddressingContext;
 use Sylius\Behat\Context\Ui\Shop\Checkout\CheckoutShippingContext;
 use Sylius\Behat\Page\Shop\Account\RegisterPageInterface;
@@ -21,7 +22,6 @@ use Sylius\Behat\Page\Shop\Checkout\CompletePageInterface;
 use Sylius\Behat\Page\Shop\Checkout\SelectPaymentPageInterface;
 use Sylius\Behat\Page\Shop\Checkout\SelectShippingPageInterface;
 use Sylius\Behat\Page\Shop\Order\ShowPageInterface;
-use Sylius\Behat\Page\UnexpectedPageException;
 use Sylius\Behat\Service\Resolver\CurrentPageResolverInterface;
 use Sylius\Component\Addressing\Model\CountryInterface;
 use Tests\BitBag\SyliusQuadPayPlugin\Behat\Mocker\QuadPayApiMocker;
@@ -180,7 +180,7 @@ final class CheckoutContext implements Context
      */
     public function iProceedThroughCheckoutProcess($localeCode = 'en_US'): void
     {
-        $this->addressingContext->iProceedSelectingShippingCountry(null, $localeCode);
+        $this->addressingContext->iProceedSelectingBillingCountry(null, $localeCode);
         $this->shippingContext->iCompleteTheShippingStep();
         $this->paymentContext->iCompleteThePaymentStep();
     }
@@ -190,7 +190,7 @@ final class CheckoutContext implements Context
      */
     public function iProceedSelectingShippingCountryAndShippingMethod(CountryInterface $shippingCountry = null, $shippingMethodName = null): void
     {
-        $this->addressingContext->iProceedSelectingShippingCountry($shippingCountry);
+        $this->addressingContext->iProceedSelectingBillingCountry($shippingCountry);
         $this->shippingContext->iHaveProceededSelectingShippingMethod($shippingMethodName ?: 'Free');
     }
 

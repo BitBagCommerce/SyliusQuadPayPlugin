@@ -1,4 +1,6 @@
 services:
+    _defaults:
+        public: true
     bitbag_sylius_quadpay_plugin.behat.context.ui.admin.managing_payment_method_quadpay:
         class: Tests\BitBag\SyliusQuadPayPlugin\Behat\Context\Ui\Admin\ManagingPaymentMethodContext
         arguments:
