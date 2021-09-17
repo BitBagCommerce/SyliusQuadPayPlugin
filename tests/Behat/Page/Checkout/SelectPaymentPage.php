@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace Tests\BitBag\SyliusQuadPayPlugin\Behat\Page\Checkout;
 
 use Behat\Mink\Driver\Selenium2Driver;
-use Sylius\Behat\Page\Shop\Checkout\SelectPaymentPageInterface;
 use Sylius\Behat\Page\Shop\Checkout\SelectPaymentPage as BaseSelectPaymentPage;
+use Sylius\Behat\Page\Shop\Checkout\SelectPaymentPageInterface;
 
 class SelectPaymentPage extends BaseSelectPaymentPage implements SelectPaymentPageInterface
 {

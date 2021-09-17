@@ -8,3 +8,4 @@ bitbag_sylius_quadpay_plugin:
         quadpay_gateway_label: QuadPay
         minimum_amount: Minimum amount
         maximum_amount: Maximum amount
+        we_support_quad_pay: We support QuadPay

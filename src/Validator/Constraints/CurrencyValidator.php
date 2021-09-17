@@ -23,7 +23,7 @@ final class CurrencyValidator extends ConstraintValidator
      * @param PaymentMethodInterface $paymentMethod
      * @param Constraint|Currency $constraint
      *
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function validate($paymentMethod, Constraint $constraint): void
     {
@@ -43,7 +43,7 @@ final class CurrencyValidator extends ConstraintValidator
                 null === $channel->getBaseCurrency() ||
                 false === in_array(strtoupper($channel->getBaseCurrency()->getCode()), QuadPayGatewayFactory::CURRENCIES_AVAILABLE)
             ) {
-                $message = isset($constraint->message) ? $constraint->message : null;
+                $message = $constraint->message ?? null;
 
                 $this->context->buildViolation($message, [
                     '{{ currencies }}' => implode(', ', QuadPayGatewayFactory::CURRENCIES_AVAILABLE),

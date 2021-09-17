@@ -23,7 +23,7 @@ final class OrderAmountValidator extends ConstraintValidator
      * @param PaymentInterface $payment
      * @param Constraint|OrderAmount $constraint
      *
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function validate($payment, Constraint $constraint): void
     {

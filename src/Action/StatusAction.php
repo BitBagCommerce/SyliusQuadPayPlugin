@@ -29,7 +29,7 @@ final class StatusAction implements ActionInterface, GatewayAwareInterface, ApiA
     use ApiAwareTrait;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      *
      * @param GetStatusInterface $request
      */
