@@ -4,13 +4,13 @@
 
 ----
 
-[![](https://img.shields.io/packagist/l/bitbag/quadpay-plugin.svg) ](https://packagist.org/packages/bitbag/quadpay-plugin "License") 
+[ ![](https://img.shields.io/packagist/l/bitbag/quadpay-plugin.svg) ](https://packagist.org/packages/bitbag/quadpay-plugin "License") 
 [ ![](https://img.shields.io/packagist/v/bitbag/quadpay-plugin.svg) ](https://packagist.org/packages/bitbag/quadpay-plugin "Version") 
 [ ![](https://img.shields.io/travis/BitBagCommerce/SyliusQuadPayPlugin/master.svg) ](http://travis-ci.org/BitBagCommerce/SyliusQuadPayPlugin "Build status") 
 [ ![](https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusQuadPayPlugin.svg) ](https://scrutinizer-ci.com/g/BitBagCommerce/SyliusQuadPayPlugin/ "Scrutinizer") 
-[![](https://poser.pugx.org/bitbag/quadpay-plugin/downloads)](https://packagist.org/packages/bitbag/quadpay-plugin "Total Downloads") 
-[![Slack](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)](http://sylius-devs.slack.com) 
-[![Support](https://img.shields.io/badge/support-contact%20author-blue])](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_quad_pay)
+[ ![](https://poser.pugx.org/bitbag/quadpay-plugin/downloads)](https://packagist.org/packages/bitbag/quadpay-plugin "Total Downloads") 
+[ ![Slack](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)](http://sylius-devs.slack.com) 
+[ ![Support](https://img.shields.io/badge/support-contact%20author-blue])](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_quad_pay)
 
 At BitBag we do believe in open source. However, we are able to do it just because of our awesome clients, who are kind enough to share some parts of our work with the community. Therefore, if you feel like there is a possibility for us to work  together, feel free to reach out. You will find out more about our professional services, technologies, and contact details at [https://bitbag.io/](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_quad_pay).
 
@@ -43,50 +43,88 @@ This **open-source plugin was developed to help the Sylius community**. If you h
 
 [![](https://bitbag.io/wp-content/uploads/2020/10/button-contact.png)](https://bitbag.io/contact-us/?utm_source=github&utm_medium=referral&utm_campaign=plugins_quad_pay)
 
-## Installation
+# Installation
+----
 
-1. Require plugin with composer:
 
-    ```bash
-    composer require bitbag/quadpay-plugin
-    ```
+We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
+```bash
+$ composer require bitbag/quadpay-plugin
+```
 
-2. Import configuration:
+Add plugin dependencies to your `config/bundles.php` file:
+```php
+return [
+    ...
 
-    ```yaml
-    imports:
-        - { resource: "@BitBagSyliusQuadPayPlugin/Resources/config/config.yml" }
-    ```
+    BitBag\SyliusQuadPayPlugin\BitBagSyliusQuadPayPlugin::class => ['all' => true],
+];
+```
 
-3. Add parameters to `config.yml`:
+Import required config in your `config/packages/_sylius.yaml` file:
+```yaml
+# config/packages/_sylius.yaml
 
-    ```yaml
-    parameters:
-        sylius.form.type.checkout_select_payment.validation_groups: ['sylius', 'checkout_select_payment']
-    ```
+imports:
+    ...
+    
+    - { resource: "@BitBagSyliusQuadPayPlugin/Resources/config/config.yml" }
+```
 
-4. Add plugin class to your `AppKernel`:
+Add parameters to `config/routes.yaml` file:
 
-    ```php
-    $bundles = [
-        new \BitBag\SyliusQuadPayPlugin\BitBagSyliusQuadPayPlugin(),
-    ];
-    ```
+```yaml
+# config/packages/_sylius.yaml
 
-5. Copy templates from `vendor/bitbag/quadpay-plugin/src/Resources/views/SyliusShopBundle/`
-   to `app/Resources/SyliusShopBundle/views/`.
+parameters:
+    sylius.form.type.checkout_select_payment.validation_groups: ['sylius', 'checkout_select_payment']
+```
 
-6. Install assets:
+Install assets:
 
-    ```bash
-    bin/console assets:install --symlink web
-    ```
+```
+$ bin/console assets:install
+```
+Clear cache:
 
-7. Clear cache:
+```
+$ bin/console cache:clear
+```
+Add widget to product page: `show.html.twig`
+```twig
+    {{ bitbag_quadpay_render_widget(product|sylius_resolve_variant|sylius_calculate_price({'channel': sylius.channel}), sylius.channel) }}
+```
+Create `templates/bundles/SyliusShopBundle/Checkout/SelectPayment/_choice.html.twig`
+```twig
+{% set qudPayFactoryName = constant('BitBag\\SyliusQuadPayPlugin\\QuadPayGatewayFactory::FACTORY_NAME') %}
 
-    ```bash
-    bin/console cache:clear
-    ```
+{% set is_quad_pay_method = method.gatewayConfig.factoryName is defined and qudPayFactoryName == method.gatewayConfig.factoryName %}
+
+
+<div class="item" {{ sylius_test_html_attribute('payment-item') }} {{ is_quad_pay_method ? 'quadpay-method' : '' }}>
+    <div class="field">
+        <div class="ui radio checkbox" {{ sylius_test_html_attribute('payment-method-checkbox') }}>
+            {{ form_widget(form, sylius_test_form_attribute('payment-method-select')) }}
+        </div>
+    </div>
+    <div class="content">
+        {% if is_quad_pay_method %}
+        <a class="header">
+            <img src="{{ asset('bundles/bitbagsyliusquadpayplugin/img/quadpay_4interestfree_lc@2x.png') }}">
+        </a>
+        <div>
+            <p>{{ method.description }}</p>
+        </div>
+        {% else %}
+            <a class="header">{{ form_label(form, null, {'label_attr': {'data-test-payment-method-label': ''}}) }}</a>
+            {% if method.description is not null %}
+                <div class="description">
+                    <p>{{ method.description }}</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
 
 ## Required merchant configuration in QuadPay
 
@@ -102,42 +140,20 @@ For example:
 */10 * * * * bin/console bitbag:quadpay:update-payment-state
 ```
 
-## QuadPay Widget
-
-QuadPay Widget could be rendered in your twig templates using `bitbag_quadpay_render_widget([amount], [channel])` helper extension.
-
-For example:
-
-```twig
-<link rel="stylesheet" href="{{ asset('bundles/bitbagsyliusquadpayplugin/css/style.css') }}">
-
-{{ bitbag_quadpay_render_widget(cart.total, sylius.channel) }}
-```
-
-## Customization
-
-### Available services you can [decorate](https://symfony.com/doc/current/service_container/service_decoration.html) and forms you can [extend](http://symfony.com/doc/current/form/create_form_type_extension.html)
-
-Run the below command to see what Symfony services are shared with this plugin:
-
-```bash
-$ bin/console debug:container bitbag_sylius_quadpay_plugin
-```
-
 ## Testing
 
 ```bash
 $ composer install
 $ cd tests/Application
 $ yarn install
-$ yarn run gulp
-$ bin/console assets:install web -e test
-$ bin/console doctrine:database:create -e test
+$ yarn build
+$ bin/console assets:install public -e test
 $ bin/console doctrine:schema:create -e test
-$ bin/console server:run 127.0.0.1:8080 -d web -e test
+$ bin/console server:run 127.0.0.1:8080 -d public -e test
 $ open http://localhost:8080
-$ bin/behat
-$ bin/phpspec run
+$ cd ../..
+$ vendor/bin/behat
+$ vendor/bin/phpspec run
 ```
 
 
