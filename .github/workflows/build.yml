@@ -10,7 +10,7 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "Sylius ${{ matrix.php }}, PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}"
+        name: "Sylius ${{ matrix.sylius }}, PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}"
 
         strategy:
             fail-fast: false
