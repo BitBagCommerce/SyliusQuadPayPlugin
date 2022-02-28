@@ -10,14 +10,14 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}"
+        name: "Sylius ${{ matrix.php }}, PHP ${{ matrix.php }}, MySQL ${{ matrix.mysql }}"
 
         strategy:
             fail-fast: false
             matrix:
                 php: [7.4, 8.0]
                 sylius: [~1.9.0, ~1.10.0, ~1.11.0]
-                node: [10.x]
+                node: [12.x]
                 mysql: [5.7, 8.0]
 
                 exclude:
