@@ -21,6 +21,7 @@ use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 final class RenderWidgetExtensionSpec extends ObjectBehavior
@@ -39,7 +40,7 @@ final class RenderWidgetExtensionSpec extends ObjectBehavior
 
     function it_extends_twig_extension(): void
     {
-        $this->shouldHaveType(TwigFunction::class);
+        $this->shouldHaveType(AbstractExtension::class);
     }
 
     function it_returns_functions(): void
