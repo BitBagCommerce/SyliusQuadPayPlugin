@@ -25,6 +25,7 @@ use Payum\Core\Security\TokenInterface;
 final class CaptureAction implements ActionInterface, ApiAwareInterface, GatewayAwareInterface
 {
     use GatewayAwareTrait;
+
     use ApiAwareTrait;
 
     /**

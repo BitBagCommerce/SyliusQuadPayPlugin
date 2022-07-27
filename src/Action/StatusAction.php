@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class StatusAction implements ActionInterface, GatewayAwareInterface, ApiAwareInterface
 {
     use GatewayAwareTrait;
+
     use ApiAwareTrait;
 
     /**

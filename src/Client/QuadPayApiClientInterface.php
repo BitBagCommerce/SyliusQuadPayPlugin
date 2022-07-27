@@ -13,8 +13,11 @@ namespace BitBag\SyliusQuadPayPlugin\Client;
 interface QuadPayApiClientInterface
 {
     public const STATUS_CREATED = 'created';
+
     public const STATUS_APPROVED = 'approved';
+
     public const STATUS_DECLINED = 'declined';
+
     public const STATUS_ABANDONED = 'abandoned';
 
     public function setConfig(
