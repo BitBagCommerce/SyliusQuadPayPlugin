@@ -137,8 +137,7 @@ class QuadPayApiClient implements QuadPayApiClientInterface
         string $url,
         array $data = [],
         ?string $accessToken = null
-    ): array
-    {
+    ): array {
         $options = [
             'json' => $data,
             'headers' => $this->getHeaders($accessToken),

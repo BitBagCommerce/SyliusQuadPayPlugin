@@ -53,8 +53,7 @@ final class RenderWidgetExtension extends AbstractExtension
         int $amount,
         ChannelInterface $channel,
         PaymentMethodInterface $paymentMethod = null
-    ): string
-    {
+    ): string {
         if (null === $paymentMethod) {
             $paymentMethod = $this->paymentMethodRepository->findOneByGatewayFactoryNameAndChannel(QuadPayGatewayFactory::FACTORY_NAME, $channel);
         }
