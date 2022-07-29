@@ -33,7 +33,7 @@ final class CurrencyValidator extends ConstraintValidator
 
         $gatewayConfig = $paymentMethod->getGatewayConfig();
 
-        if (null === $gatewayConfig || ($gatewayConfig->getFactoryName() !== QuadPayGatewayFactory::FACTORY_NAME)) {
+        if (null === $gatewayConfig || (QuadPayGatewayFactory::FACTORY_NAME !== $gatewayConfig->getFactoryName())) {
             return;
         }
 

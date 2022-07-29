@@ -17,6 +17,7 @@ use Payum\Core\GatewayFactory;
 final class QuadPayGatewayFactory extends GatewayFactory
 {
     public const FACTORY_NAME = 'quadpay';
+
     public const CURRENCIES_AVAILABLE = ['USD'];
 
     protected function populateConfig(ArrayObject $config): void

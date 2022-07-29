@@ -132,8 +132,12 @@ class QuadPayApiClient implements QuadPayApiClientInterface
         return $headers;
     }
 
-    protected function request(string $method, string $url, array $data = [], ?string $accessToken = null): array
-    {
+    protected function request(
+        string $method,
+        string $url,
+        array $data = [],
+        ?string $accessToken = null
+    ): array {
         $options = [
             'json' => $data,
             'headers' => $this->getHeaders($accessToken),
