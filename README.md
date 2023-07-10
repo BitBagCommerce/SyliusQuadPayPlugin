@@ -6,7 +6,7 @@
 
 [ ![](https://img.shields.io/packagist/l/bitbag/quadpay-plugin.svg) ](https://packagist.org/packages/bitbag/quadpay-plugin "License") 
 [ ![](https://img.shields.io/packagist/v/bitbag/quadpay-plugin.svg) ](https://packagist.org/packages/bitbag/quadpay-plugin "Version") 
-[ ![](https://img.shields.io/travis/BitBagCommerce/SyliusQuadPayPlugin/master.svg) ](http://travis-ci.org/BitBagCommerce/SyliusQuadPayPlugin "Build status") 
+[ ![](https://img.shields.io/github/actions/workflow/status/BitBagCommerce/SyliusQuadPayPlugin/build.yml?branch=master) ](https://github.com/BitBagCommerce/SyliusQuadPayPlugin/actions?query=branch%3Amaster "Build status")
 [ ![](https://img.shields.io/scrutinizer/g/BitBagCommerce/SyliusQuadPayPlugin.svg) ](https://scrutinizer-ci.com/g/BitBagCommerce/SyliusQuadPayPlugin/ "Scrutinizer") 
 [ ![](https://poser.pugx.org/bitbag/quadpay-plugin/downloads)](https://packagist.org/packages/bitbag/quadpay-plugin "Total Downloads") 
 [ ![Slack](https://img.shields.io/badge/community%20chat-slack-FF1493.svg)](http://sylius-devs.slack.com) 
