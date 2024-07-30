@@ -49,7 +49,7 @@ This **open-source plugin was developed to help the Sylius community**. If you h
 
 We work on stable, supported and up-to-date versions of packages. We recommend you to do the same.
 ```bash
-$ composer require bitbag/quadpay-plugin
+composer require bitbag/quadpay-plugin
 ```
 
 Add plugin dependencies to your `config/bundles.php` file:
@@ -82,13 +82,13 @@ parameters:
 
 Install assets:
 
-```
-$ bin/console assets:install
+```bash
+bin/console assets:install
 ```
 Clear cache:
 
-```
-$ bin/console cache:clear
+```bash
+bin/console cache:clear
 ```
 Add widget to product page: `show.html.twig`
 ```twig
