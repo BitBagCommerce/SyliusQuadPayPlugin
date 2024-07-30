@@ -42,4 +42,4 @@ default:
 
                 - bitbag_sylius_quadpay_plugin.behat.context.ui.shop.checkout
             filters:
-                tags: "@paying_with_quadpay_for_order && @ui"
+                tags: "@paying_with_quadpay_for_order&&@ui"

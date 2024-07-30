@@ -3,7 +3,7 @@ default:
         ui_refunding_quadpay_payment:
             contexts:
                 - sylius.behat.context.hook.doctrine_orm
-                - sylius.behat.context.hook.email_spool
+                - sylius.behat.context.hook.mailer
 
                 - sylius.behat.context.setup.channel
                 - sylius.behat.context.setup.currency
@@ -55,5 +55,5 @@ default:
 
                 - bitbag_sylius_quadpay_plugin.behat.context.ui.admin.refund
             filters:
-                tags: "@refunding_quadpay_payment && @ui"
+                tags: "@refunding_quadpay_payment&&@ui"
 
