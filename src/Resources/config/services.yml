@@ -6,11 +6,15 @@ imports:
     - { resource: "services/repository.yml" }
 
 services:
+    bitbag_sylius_quadpay_plugin.http_client:
+        class: GuzzleHttp\Client
+        public: false
+
     bitbag_sylius_quadpay_plugin.quadpay_api_client:
         class: BitBag\SyliusQuadPayPlugin\Client\QuadPayApiClient
         public: true
         arguments:
-            - "@sylius.http_client"
+            - "@bitbag_sylius_quadpay_plugin.http_client"
 
     bitbag_sylius_quadpay_plugin.payment_processing.refund:
         class: BitBag\SyliusQuadPayPlugin\PaymentProcessing\RefundPaymentProcessor

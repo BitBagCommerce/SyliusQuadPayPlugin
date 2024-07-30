@@ -15,27 +15,19 @@ use GuzzleHttp\ClientInterface;
 
 class QuadPayApiClient implements QuadPayApiClientInterface
 {
-    /** @var ClientInterface */
-    protected $apiClient;
+    protected string $clientId;
 
-    /** @var string */
-    protected $clientId;
+    protected string $clientSecret;
 
-    /** @var string */
-    protected $clientSecret;
+    protected string $apiEndpoint;
 
-    /** @var string */
-    protected $apiEndpoint;
+    protected string $authTokenEndpoint;
 
-    /** @var string */
-    protected $authTokenEndpoint;
+    protected string $apiAudience;
 
-    /** @var string */
-    protected $apiAudience;
-
-    public function __construct(ClientInterface $client)
-    {
-        $this->apiClient = $client;
+    public function __construct(
+        protected ClientInterface $client,
+    ) {
     }
 
     public function setConfig(
@@ -144,7 +136,7 @@ class QuadPayApiClient implements QuadPayApiClientInterface
             'headers' => $this->getHeaders($accessToken),
         ];
 
-        $result = $this->apiClient->request($method, $url, $options);
+        $result = $this->client->request($method, $url, $options);
 
         return \GuzzleHttp\json_decode((string) $result->getBody(), true);
     }
