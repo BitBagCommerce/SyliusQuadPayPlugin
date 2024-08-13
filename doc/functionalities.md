@@ -14,7 +14,7 @@ This plugin supports communication with the QuadPay payment system API and **all
 ## Usage
 
 ---
-### Adding Payment Gate
+### Adding Payment Gateway
 
 After installation, users can add the payment method
 <div align="center">
