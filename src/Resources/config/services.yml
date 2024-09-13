@@ -20,7 +20,8 @@ services:
         class: BitBag\SyliusQuadPayPlugin\PaymentProcessing\RefundPaymentProcessor
         public: true
         arguments:
-            - "@session"
+#            - "@session"
+            - "@request_stack"
             - "@bitbag_sylius_quadpay_plugin.quadpay_api_client"
 
     bitbag_sylius_quadpay_plugin.resolver.payment_state:

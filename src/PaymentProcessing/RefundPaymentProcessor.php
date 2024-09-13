@@ -17,13 +17,13 @@ use GuzzleHttp\Exception\ClientException;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Resource\Exception\UpdateHandlingException;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class RefundPaymentProcessor implements PaymentProcessorInterface
 {
-    /** @var Session */
-    private $session;
+    /** @var RequestStack */
+    private $requestStack;
 
     /** @var QuadPayApiClientInterface */
     private $quadPayApiClient;
@@ -31,9 +31,9 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
     /** @var \Faker\Generator */
     private $faker;
 
-    public function __construct(Session $session, QuadPayApiClientInterface $quadPayApiClient)
+    public function __construct(RequestStack $requestStack, QuadPayApiClientInterface $quadPayApiClient)
     {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->quadPayApiClient = $quadPayApiClient;
 
         $this->faker = \Faker\Factory::create();
@@ -51,7 +51,8 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
         $details = $payment->getDetails();
 
         if (false === isset($details['orderToken'])) {
-            $this->session->getFlashBag()->add('info', 'The payment refund was made only locally.');
+            $this->requestStack->getSession()
+                ->getFlashBag()->add('info', 'The payment refund was made only locally.');
 
             return;
         }
@@ -88,7 +89,7 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
                 $message = (string) $clientException->getResponse()->getBody();
             }
 
-            $this->session->getFlashBag()->add('error', $message);
+            $this->requestStack->getSession()->getFlashBag()->add('error', $message);
 
             throw new UpdateHandlingException();
         }
