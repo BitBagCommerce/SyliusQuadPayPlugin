@@ -1,10 +1,11 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -16,13 +17,13 @@ use GuzzleHttp\Exception\ClientException;
 use Sylius\Component\Core\Model\PaymentInterface;
 use Sylius\Component\Core\Model\PaymentMethodInterface;
 use Sylius\Component\Resource\Exception\UpdateHandlingException;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 final class RefundPaymentProcessor implements PaymentProcessorInterface
 {
-    /** @var Session */
-    private $session;
+    /** @var RequestStack */
+    private $requestStack;
 
     /** @var QuadPayApiClientInterface */
     private $quadPayApiClient;
@@ -30,9 +31,9 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
     /** @var \Faker\Generator */
     private $faker;
 
-    public function __construct(Session $session, QuadPayApiClientInterface $quadPayApiClient)
+    public function __construct(RequestStack $requestStack, QuadPayApiClientInterface $quadPayApiClient)
     {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->quadPayApiClient = $quadPayApiClient;
 
         $this->faker = \Faker\Factory::create();
@@ -50,7 +51,8 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
         $details = $payment->getDetails();
 
         if (false === isset($details['orderToken'])) {
-            $this->session->getFlashBag()->add('info', 'The payment refund was made only locally.');
+            $this->requestStack->getSession()
+                ->getFlashBag()->add('info', 'The payment refund was made only locally.');
 
             return;
         }
@@ -62,7 +64,7 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
             $gatewayConfig['clientSecret'],
             $gatewayConfig['apiEndpoint'],
             $gatewayConfig['authTokenEndpoint'],
-            $gatewayConfig['apiAudience']
+            $gatewayConfig['apiAudience'],
         );
 
         $merchantRefundReference = $this->faker->uuid;
@@ -74,7 +76,7 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
                 $payment->getAmount() / 100,
                 $merchantRefundReference,
                 $details['orderToken'],
-                $details['orderId'] ?? null
+                $details['orderId'] ?? null,
             );
 
             $details['refundDetails'] = $result;
@@ -87,7 +89,7 @@ final class RefundPaymentProcessor implements PaymentProcessorInterface
                 $message = (string) $clientException->getResponse()->getBody();
             }
 
-            $this->session->getFlashBag()->add('error', $message);
+            $this->requestStack->getSession()->getFlashBag()->add('error', $message);
 
             throw new UpdateHandlingException();
         }

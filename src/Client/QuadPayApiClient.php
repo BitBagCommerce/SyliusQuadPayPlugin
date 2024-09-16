@@ -1,10 +1,11 @@
 <?php
 
 /*
- * This file was created by developers working at BitBag
- * Do you need more information about us and what we do? Visit our https://bitbag.io website!
- * We are hiring developers from all over the world. Join us and start your new, exciting adventure and become part of us: https://bitbag.io/career
-*/
+ * This file has been created by developers from BitBag.
+ * Feel free to contact us once you face any issues or want to start
+ * You can find more information about us on https://bitbag.io and write us
+ * an email on hello@bitbag.io.
+ */
 
 declare(strict_types=1);
 
@@ -14,27 +15,19 @@ use GuzzleHttp\ClientInterface;
 
 class QuadPayApiClient implements QuadPayApiClientInterface
 {
-    /** @var ClientInterface */
-    protected $apiClient;
+    protected string $clientId;
 
-    /** @var string */
-    protected $clientId;
+    protected string $clientSecret;
 
-    /** @var string */
-    protected $clientSecret;
+    protected string $apiEndpoint;
 
-    /** @var string */
-    protected $apiEndpoint;
+    protected string $authTokenEndpoint;
 
-    /** @var string */
-    protected $authTokenEndpoint;
+    protected string $apiAudience;
 
-    /** @var string */
-    protected $apiAudience;
-
-    public function __construct(ClientInterface $client)
-    {
-        $this->apiClient = $client;
+    public function __construct(
+        protected ClientInterface $client,
+    ) {
     }
 
     public function setConfig(
@@ -42,7 +35,7 @@ class QuadPayApiClient implements QuadPayApiClientInterface
         string $clientSecret,
         string $apiEndpoint,
         string $authTokenEndpoint,
-        string $apiAudience
+        string $apiAudience,
     ): void {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
@@ -105,7 +98,7 @@ class QuadPayApiClient implements QuadPayApiClientInterface
         float $amount,
         string $merchantRefundReference,
         string $orderToken,
-        ?string $orderId = null
+        ?string $orderId = null,
     ): array {
         if (null === $orderId) {
             $orderId = $this->getOrderByToken($orderToken)['orderId'];
@@ -136,14 +129,14 @@ class QuadPayApiClient implements QuadPayApiClientInterface
         string $method,
         string $url,
         array $data = [],
-        ?string $accessToken = null
+        ?string $accessToken = null,
     ): array {
         $options = [
             'json' => $data,
             'headers' => $this->getHeaders($accessToken),
         ];
 
-        $result = $this->apiClient->request($method, $url, $options);
+        $result = $this->client->request($method, $url, $options);
 
         return \GuzzleHttp\json_decode((string) $result->getBody(), true);
     }

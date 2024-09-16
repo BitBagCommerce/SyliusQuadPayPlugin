@@ -9,11 +9,6 @@
 
 declare(strict_types=1);
 
-namespace BitBag\SyliusQuadPayPlugin\Resolver;
-
-use Sylius\Component\Core\Model\PaymentInterface;
-
-interface PaymentStateResolverInterface
-{
-    public function resolve(PaymentInterface $payment): void;
-}
+return [
+    Sylius\Abstraction\StateMachine\SyliusStateMachineAbstractionBundle::class => ['all' => true],
+];
